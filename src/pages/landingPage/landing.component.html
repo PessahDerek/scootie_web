@@ -1,0 +1,52 @@
+<main>
+  <div class="w-full h-[40vh] md:h-[50vh]">
+    <img priority data-aos="fade-up" class="object-contain" fill ngSrc="../../assets/landing.png"
+         alt="landing-page image"/>
+  </div>
+  <p data-aos="fade-up" class="text-center text-2xl">Move Different</p>
+  <!--About section -->
+  <div class="bg-primary-500">
+    <!--    <div class="upward-triangle"></div>-->
+    <article class="w-[90%] m-auto grid ">
+      <h1 class="font-bold text-accent">Who are we?</h1>
+      <p class=" md:columns-2" [innerHTML]="about.slice(0,1000)"></p>
+      <a class="text-btn h-[40px]" [routerLink]="about">Read more</a>
+    </article>
+  </div>
+  <br/>
+  <br/>
+  <!--The why-->
+  <div class="w-[90%] m-auto flex flex-wrap gap-2">
+    <div class="w-[50vmin] h-[50vmin] grid min-w-[300px]">
+      <div data-aos="fade-down">
+        <img priority class="w-full h-full object-contain" fill ngSrc="../../assets/why.png" alt="why fat-bikes"/>
+      </div>
+      <h1 data-aos="fade-up" class="absolute font-bold text-accent">Why fat bikes?</h1>
+    </div>
+    <div class="flex-1 w-full min-w-[300px] overflow-hidden">
+      <ol type="1" class="grid md:grid-cols-2 gap-2">
+        @for (benefit of benefits; track benefits) {
+          <div data-aos="zoom-out" class="w-full bg-primary p-2">
+            <li class="font-1 text-accent font-bold">{{ benefit.title }}</li>
+            <!--              <h3 class="font-1 text-accent font-bold">{{ benefit.title }}</h3>-->
+            <p>{{ benefit.description }}</p>
+            <!--            </li>-->
+          </div>
+        }
+      </ol>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <!-- Categories -->
+  <div class="w-[90%] m-auto grid grid-cols-2">
+    @for (category of categories; track categories) {
+      <list-category [category]="category.category" [thumbnail]="category.bikes[0]?.image1??''" />
+    }
+  </div>
+  <br>
+  <div class="w-[90%] m-auto">
+    <h2 class="text-[5ch] text-center font-1">What's the word out there'?</h2>
+    <carousel-component [data]="[4,2]"/>
+  </div>
+</main>

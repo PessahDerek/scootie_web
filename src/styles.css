@@ -1,1 +1,81 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  /*outline: 0; TODO: uncomment outline*/
+  position: relative;
+  @apply transition-all;
+  /*outline: 1px solid red;*/
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  /*@apply bg-primary;*/
+}
+
+.font-1 {
+  font-family: "Julius Sans One", sans-serif;
+}
+
+.page {
+  @apply w-full min-h-[calc(100vh-70px)] ;
+}
+
+.btn {
+  @apply w-max h-[40px] leading-[40px] pl-4 pr-4 font-1;
+}
+
+.pri-btn {
+  @apply btn bg-primary-400 text-black hover:bg-primary;
+}
+.text-btn {
+  @apply btn bg-transparent text-accent hover:text-accent-400 border border-transparent hover:border-accent-100;
+}
+
+.acc-btn-lt {
+  @apply btn bg-accent-50 text-accent-600;
+
+  &:hover {
+    @apply bg-accent-100 ;
+  }
+
+  :active {
+    @apply bg-accent-400 ;
+  }
+}
+
+.dropdown {
+  @apply w-max h-max m-auto ;
+  button {
+    @apply w-max h-max grid gap-1 ;
+    div {
+      @apply w-[30px] h-[3px] bg-accent;
+    }
+  }
+  & .menu {
+    @apply fixed w-[200px] top-[70px] bg-primary-400 drop-shadow-2xl border border-primary rounded-md p-5 z-20 grid gap-2 right-0;
+  }
+  a {
+    @apply w-full h-[50px] text-accent active:text-accent-300 active:bg-primary indent-2 leading-[50px] border-b border-b-primary-600;
+  }
+}
+
+h1 {
+  @apply text-[5vmax] font-1
+}
+
+.upward-triangle {
+  width: 0;
+  height: 0;
+  border-left: 48vw solid white; /* Adjust width for desired size */
+  border-right: 48vw solid white;
+  border-bottom: 5vh solid;
+  @apply border-b-primary
+}
