@@ -71,6 +71,9 @@ h1 {
   @apply text-[5vmax] font-1
 }
 
+.hide-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
 .upward-triangle {
   width: 0;
   height: 0;

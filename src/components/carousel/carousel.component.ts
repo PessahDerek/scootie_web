@@ -1,27 +1,30 @@
-import {Component, Input} from "@angular/core";
-import {NgForOf} from "@angular/common";
+import {Component, Input, TemplateRef} from "@angular/core";
+import {NgForOf, NgTemplateOutlet} from "@angular/common";
+import {ListReviewComponent} from "../list_review/list_review.component";
 
 
 @Component({
   standalone: true,
   selector: 'carousel-component',
   imports: [
-    NgForOf
+    NgForOf,
+    NgTemplateOutlet,
+    ListReviewComponent,
   ],
   template: `
-    <div class="w-full grid gap-4 auto-rows-max min-h-[20vh]">
-      <div class="w-full h-[80%] bg-primary-600">
-        @for (data of data; track data){
-          {{component}}
+    <div class="w-full h-max grid gap-4 auto-rows-max">
+      <div class="w-full h-max p-2 flex overflow-x-auto gap-4 scroll-m-0 hide-scroll-bar bg-primary">
+        @for (review of reviews; track reviews) {
+          <list_review [review]="review" />
         }
       </div>
-      <div class="grid grid-flow-col auto-cols-max gap-2 m-auto">
-        <div class="w-[10px] h-[10px] rounded-full bg-accent" *ngFor="let dot of [].constructor(data.length)"></div>
-      </div>
+<!--      <div class="grid grid-flow-col auto-cols-max gap-2 m-auto">-->
+<!--        <div class="w-[10px] h-[10px] rounded-full bg-accent" *ngFor="let dot of [].constructor(reviews.length)"></div>-->
+<!--      </div>-->
     </div>
   `
 })
 export class CarouselComponent {
-  @Input() component?: Component;
-  @Input() data: Array<any> = [];
+  @Input() reviews: Array<ReviewObj> = [];
+
 }

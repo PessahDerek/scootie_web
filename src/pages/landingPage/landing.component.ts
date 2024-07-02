@@ -3,9 +3,10 @@ import {NgOptimizedImage} from "@angular/common";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import sanitize from "sanitize-html";
 import {RouterLink} from "@angular/router";
-import {ListCategoryComponent} from "../../components/listCategory/listcategory.component";
-import {ListReviewComponent} from "../../components/listReview/list_review.component";
+import {ListCategoryComponent} from "../../components/list_category/listcategory.component";
+import {ListReviewComponent} from "../../components/list_review/list_review.component";
 import {CarouselComponent} from "../../components/carousel/carousel.component";
+import {SafePipe} from "../../app/app.component";
 
 
 @Component({
@@ -19,6 +20,7 @@ import {CarouselComponent} from "../../components/carousel/carousel.component";
     ListCategoryComponent,
     ListReviewComponent,
     CarouselComponent,
+    SafePipe,
   ]
 })
 export class LandingComponent {
@@ -43,21 +45,30 @@ export class LandingComponent {
   ];
   categories: Array<CategoryObj> = [];
   reviews: Array<ReviewObj> = [];
+  videoUrl: string = "";
+  base: string = "http://192.168.100.76:8000"
 
   constructor(private http: HttpClient) {
-    this.http.get<{ content: string }>("http://127.0.0.1:8000/content/1/")
+    this.http.get<{ content: string }>(`${this.base}/content/1/`)
       .subscribe(data => {
         this.about = sanitize(data.content)
         // console.log(data.content);
       })
-    this.http.get<{results: Array<CategoryObj>}>("http://127.0.0.1:8000/category/")
+    this.http.get<{results: Array<CategoryObj>}>(`${this.base}/category/`)
       .subscribe(data => {
         this.categories = [...this.categories, ...data.results]
       })
-    this.http.get<{results: ReviewObj[]}>("http://127.0.0.1:8000/reviews/")
+    this.http.get<{results: ReviewObj[]}>(`${this.base}/reviews/`)
       .subscribe(data => {
         this.reviews = [...data.results]
       })
+    this.http.get<{results: {url: string}[]}>(`${this.base}/videos/`)
+      .subscribe(data => {
+        // Replace url to only get the unique id
+        this.videoUrl = data.results[0]?.url.replace("https://youtu.be/", "https://www.youtube.com/embed/").trim()
+        console.log(this.videoUrl)
+      })
   }
 
+  protected readonly ListReviewComponent = ListReviewComponent;
 }

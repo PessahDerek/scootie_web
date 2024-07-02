@@ -49,3 +49,14 @@ declare interface ReviewObj {
   review: string;
 }
 
+declare interface FaqObj {
+  question: string;
+  answer: string;
+}
+
+declare interface ContactObj {
+  type: "phone" | "email" | "instagram" | "facebook" | "twitter" | "pinterest" | "tiktok" | "youtube" ;
+  contact: string;
+  link: string;
+}
+
