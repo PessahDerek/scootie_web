@@ -20,14 +20,14 @@ interface PathObj {
         <a class="font-1 text-[3vmax] font-bold md:font-normal leading-[70px] text-accent" href="/">Fat-bikes Kenya</a>
         <!-- PC navigation, hidden in mobile -->
         <div class="w-max font-1 hidden md:flex gap-5">
-          @for (path of paths; track paths){
+          @for (path of paths; track paths) {
             <a [class]="[activeUrl === path.path ? 'acc-btn-lt': 'pri-btn', 'm-auto']" [routerLink]="path.path">
-              {{path.name}}
+              {{ path.name }}
             </a>
           }
         </div>
         <!-- Mobile navigation, hidden in PC -->
-        <Mobile-dropdown class="block md:hidden mt-auto mb-auto" [paths]="paths" />
+        <Mobile-dropdown class="block md:hidden mt-auto mb-auto" [paths]="paths"/>
       </div>
     </nav>
   `
@@ -39,10 +39,9 @@ export class NavbarComponent {
     {name: "About", path: "/about"},
     {name: "Cart", path: "/cart"},
   ];
-  dropdown = DropdownComponent;
 
   constructor(private incomingRouter: Router) {
-    this.listenToNavigationEnd(incomingRouter)
+    this.listenToNavigationEnd(this.incomingRouter)
   }
 
   private listenToNavigationEnd(router: Router) {

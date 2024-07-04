@@ -1,7 +1,8 @@
 import {Component} from "@angular/core";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 import {ListFaqComponent} from "../list_faq/list_faq.component";
 import {ListContactComponent} from "../list_contact/list_contact.component";
+import {FetchBikesService} from "../../../services/read/fetch_bikes.service";
 
 
 @Component({
@@ -10,7 +11,7 @@ import {ListContactComponent} from "../list_contact/list_contact.component";
   imports: [
     ListFaqComponent,
     HttpClientModule,
-    ListContactComponent
+    ListContactComponent,
   ],
   template: `
     <footer class="w-full min-h-[30vh] text-primary overflow-y-hidden grid auto-rows-max p-5 bg-accent-950">
@@ -18,13 +19,13 @@ import {ListContactComponent} from "../list_contact/list_contact.component";
         <div class="grid gap-2">
           <h2 class="text-[2ch] font-1">Faqs</h2>
           @for (faq of faqs; track faqs) {
-            <list_faq [faq]="faq" />
+            <list_faq [faq]="faq"/>
           }
         </div>
         <div class="grid auto-rows-max h-max">
           <h2 class="text-[2ch] font-1">Reach us</h2>
           @for (contact of contacts; track contacts) {
-            <list_contact [contact]="contact" />
+            <list_contact [contact]="contact"/>
           }
         </div>
       </div>
@@ -38,18 +39,17 @@ export class FooterComponent {
   year: number = new Date().getUTCFullYear();
   faqs: Array<FaqObj> = [];
   contacts: Array<ContactObj> = []
-  base = "http://192.168.100.76:8000";
 
-  constructor(private http: HttpClient) {
-    this.http.get<{results: FaqObj[]}>(`${this.base}/faqs/`)
+  constructor(private api: FetchBikesService) {
+  }
+  ngOnInit(){
+    this.api.get<{results: FaqObj[]}>(`/faqs/`)
       .subscribe(data => {
         this.faqs = this.faqs.concat(data.results)
       })
-    this.http.get<{results: ContactObj[]}>(`${this.base}/contacts/`)
+    this.api.get<{results: ContactObj[]}>(`/contacts/`)
       .subscribe(data =>{
         this.contacts = this.contacts.concat(data.results)
       })
   }
-
-  protected readonly Date = Date;
 }

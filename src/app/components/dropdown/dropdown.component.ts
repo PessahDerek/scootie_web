@@ -1,6 +1,6 @@
 import {Component, Input, Output} from "@angular/core";
 import {NavigationStart, Router, RouterLink} from "@angular/router";
-import {ClickOutsideDirective} from "../../directives/clickOutside.directive";
+import {ClickOutsideDirective} from "../../../directives/clickOutside.directive";
 
 @Component({
   standalone: true,

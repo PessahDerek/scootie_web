@@ -29,11 +29,19 @@ body {
 }
 
 .btn {
-  @apply w-max h-[40px] leading-[40px] pl-4 pr-4 font-1;
+  @apply w-max h-[40px] rounded-full leading-[40px] pl-4 pr-4 font-1;
 }
-
-.pri-btn {
+.square-btn {
+  @apply w-[40px] h-[40px] border border-accent text-accent;
+}
+.pri-btn-lt {
   @apply btn bg-primary-400 text-black hover:bg-primary;
+}
+.pri-btn-ac {
+  @apply btn bg-accent text-white hover:bg-accent-400 active:bg-accent-600
+}
+.outline-acc {
+  @apply btn bg-transparent text-accent border border-accent hover:text-accent-600 hover:bg-accent-50
 }
 .text-btn {
   @apply btn bg-transparent text-accent hover:text-accent-400 border border-transparent hover:border-accent-100;
@@ -81,4 +89,14 @@ h1 {
   border-right: 48vw solid white;
   border-bottom: 5vh solid;
   @apply border-b-primary
+}
+.hor-line {
+  @apply w-full h-[1px] bg-gray-300;
+}
+input {
+  @apply p-4;
+}
+
+.light-input {
+  @apply w-full h-[40px] bg-primary outline outline-1 outline-gray-300 rounded-full focus:outline-accent-200 ;
 }

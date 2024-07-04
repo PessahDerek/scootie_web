@@ -1,9 +1,9 @@
 import {Component, Pipe, PipeTransform} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {NavbarComponent} from "../components/navbar/navbar.component";
+import {NavbarComponent} from "./components/navbar/navbar.component";
 import Aos from "aos";
 import {DomSanitizer} from "@angular/platform-browser";
-import {FooterComponent} from "../components/footer/footer.component";
+import {FooterComponent} from "./components/footer/footer.component";
 
 @Pipe({
   name: 'safe',
@@ -28,6 +28,8 @@ export class AppComponent {
   title = 'Fat-Bikes Kenya';
 
   ngOnInit() {
-    Aos.init()
+    Aos.init({
+      duration: 700
+    })
   }
 }

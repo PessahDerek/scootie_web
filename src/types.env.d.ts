@@ -1,5 +1,4 @@
 
-
 declare interface PathObj {
   name: string;
   path: string;
@@ -12,6 +11,7 @@ declare interface CategoryObj {
 
 declare interface BikeObj {
   url: string;
+  id: number;
   brand: string;
   model: string;
   frame: string;
@@ -55,8 +55,26 @@ declare interface FaqObj {
 }
 
 declare interface ContactObj {
-  type: "phone" | "email" | "instagram" | "facebook" | "twitter" | "pinterest" | "tiktok" | "youtube" ;
+  type: "phone" | "email" | "instagram" | "facebook" | "twitter" | "pinterest" | "tiktok" | "youtube";
   contact: string;
   link: string;
 }
 
+declare type GetService<T> = (url: string, options: object) => Observable<T>
+
+declare interface ListOfBikesInStore {
+  [key: string]: number | BikeObj[];
+  page: number;
+  bikes: BikeObj[]
+}
+
+declare interface BikesInStore {
+  [key: string]: string | Array<ListOfBikesInStore>;
+  category: string;
+  list: ListOfBikesInStore[]
+}
+
+declare interface BikeStoreState {
+  [key: string]: Array<BikesInStore>
+  bikes: Array<BikesInStore>
+}

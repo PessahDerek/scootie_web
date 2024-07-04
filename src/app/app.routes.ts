@@ -1,6 +1,6 @@
-import { Routes } from '@angular/router';
-import {LandingComponent} from "../pages/landingPage/landing.component";
-import {AboutComponent} from "../pages/aboutPage/about.component";
+import {Routes} from '@angular/router';
+import {LandingComponent} from "./pages/landing_page/landing.component";
+import {AboutComponent} from "./pages/about_page/about.component";
 
 export const routes: Routes = [
   {
@@ -13,5 +13,16 @@ export const routes: Routes = [
     component: AboutComponent,
     pathMatch: "full"
   },
+  {
+    path: "view/:category",
+    loadComponent: ()=>import('./pages/category_page/category_page.component')
+      .then(m => m.CategoryPageComponent),
+  },
+  {
+    path: "category/:category/:id",
+    loadComponent: ()=>import('./pages/bike_page/bike_page.component')
+      .then(m => m.BikePageComponent)
+  }
 ];
+
 

@@ -1,0 +1,22 @@
+<div class="page">
+  @if (bike) {
+    <section class="page">
+      <div class="w-full h-full grid md:grid-cols-2">
+        <div>
+          <img priority [ngSrc]="bike.image1" fill alt="">
+        </div>
+        <div>
+          <h2>{{ bike.model }}</h2>
+          <h3>{{ bike.brand }}</h3>
+          <p>
+            {{bike.description}}
+          </p>
+        </div>
+      </div>
+    </section>
+  } @else {
+    <div class="page flex">
+      <div class="w-[50px] h-[50px] m-auto rounded-full border-2 border-accent-200 border-t-accent animate-spin "></div>
+    </div>
+  }
+</div>
