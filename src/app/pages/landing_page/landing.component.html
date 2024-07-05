@@ -1,60 +1,63 @@
 <main>
-  <div class="w-full h-[40vh] md:h-[50vh]">
-    <img priority data-aos="fade-up" class="object-contain" fill ngSrc="../../../assets/landing.png"
-         alt="landing-page image"/>
-  </div>
-  <p data-aos="fade-up" class="text-center text-2xl">Move Different</p>
-  <!--About section -->
-  <div class="bg-primary-500">
-    <!--    <div class="upward-triangle"></div>-->
-    <article data-aos="fade-up" class="w-[90%] m-auto p-5 grid ">
-      <h1 class="font-bold text-accent">Who are we?</h1>
-      <p class=" line-clamp-[10] md:line-clamp-none md:columns-2" [innerHTML]="about.slice(0,1000)"></p>
-      <a class="text-btn h-[40px]" [routerLink]="about">Read more</a>
-    </article>
-  </div>
-  <br/>
-  <br/>
-  <!--The why-->
-  <div class="w-[90%] m-auto flex flex-wrap gap-2">
-    <div class="w-[50vmin] h-[50vmin] grid min-w-[300px]">
-      <div data-aos="fade-down">
-        <img priority class="w-full h-full object-contain" fill ngSrc="../../../assets/why.png" alt="why fat-bikes"/>
+  <page-spinner *ngIf="!ready" />
+  <div data-aos="zoom-in" *ngIf="ready" >
+    <div class="w-full h-[40vh] md:h-[50vh]">
+      <img priority data-aos="fade-up" class="object-contain" fill ngSrc="../../../assets/landing.png"
+           alt="landing-page image"/>
+    </div>
+    <p data-aos="fade-up" class="text-center text-2xl">Move Different</p>
+    <!--About section -->
+    <div class="bg-primary-500">
+      <!--    <div class="upward-triangle"></div>-->
+      <article data-aos="fade-up" class="w-[90%] m-auto p-5 grid ">
+        <h1 class="font-bold text-accent">Who are we?</h1>
+        <p class=" line-clamp-[10] md:line-clamp-none md:columns-2" [innerHTML]="about.slice(0,1000)"></p>
+        <a class="text-btn h-[40px]" routerLink="about">Read more</a>
+      </article>
+    </div>
+    <br/>
+    <br/>
+    <!--The why-->
+    <div class="w-[90%] m-auto flex flex-wrap gap-2">
+      <div class="w-[50vmin] h-[50vmin] grid min-w-[300px]">
+        <div data-aos="fade-down">
+          <img priority class="w-full h-full object-contain" fill ngSrc="../../../assets/why.png" alt="why fat-bikes"/>
+        </div>
+        <h1 data-aos="fade-up" class="absolute font-bold text-accent">Why fat bikes?</h1>
       </div>
-      <h1 data-aos="fade-up" class="absolute font-bold text-accent">Why fat bikes?</h1>
+      <div class="flex-1 w-full min-w-[300px] overflow-hidden">
+        <ol type="1" class="grid md:grid-cols-2 gap-2">
+          @for (benefit of benefits; track benefit.title) {
+            <div data-aos="zoom-out" class="w-full bg-primary p-2">
+              <li class="font-1 text-accent font-bold">{{ benefit.title }}</li>
+              <!--              <h3 class="font-1 text-accent font-bold">{{ benefit.title }}</h3>-->
+              <p>{{ benefit.description }}</p>
+              <!--            </li>-->
+            </div>
+          }
+        </ol>
+      </div>
     </div>
-    <div class="flex-1 w-full min-w-[300px] overflow-hidden">
-      <ol type="1" class="grid md:grid-cols-2 gap-2">
-        @for (benefit of benefits; track benefits) {
-          <div data-aos="zoom-out" class="w-full bg-primary p-2">
-            <li class="font-1 text-accent font-bold">{{ benefit.title }}</li>
-            <!--              <h3 class="font-1 text-accent font-bold">{{ benefit.title }}</h3>-->
-            <p>{{ benefit.description }}</p>
-            <!--            </li>-->
-          </div>
-        }
-      </ol>
+    <br/>
+    <br/>
+    <!-- Categories -->
+    <div class="w-[90%] m-auto grid grid-cols-2">
+      @for (category of categories; track category.category) {
+        <list-category [category]="category.category" [thumbnail]="category.bikes[0].image1??''"/>
+      }
     </div>
+    <br>
+    <div class="w-[90%] m-auto">
+      <h2 data-aos="fade-up" class="text-[4vmax] text-center font-1">What's the word out there'?</h2>
+      <carousel-component [reviews]="reviews"/>
+    </div>
+    <br>
+    <iframe
+      data-aos="fade-up"
+      class="w-[90%] min-h-max bg-primary h-[40vh] md:h-[80vh] m-auto" [src]="videoUrl | safe"
+      title="YouTube video player"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <br>
   </div>
-  <br/>
-  <br/>
-  <!-- Categories -->
-  <div class="w-[90%] m-auto grid grid-cols-2">
-    @for (category of categories; track categories) {
-      <list-category [category]="category.category" [thumbnail]="category.bikes[0].image1"/>
-    }
-  </div>
-  <br>
-  <div class="w-[90%] m-auto">
-    <h2 data-aos="fade-up" class="text-[4vmax] text-center font-1">What's the word out there'?</h2>
-    <carousel-component [reviews]="reviews"/>
-  </div>
-  <br>
-  <iframe
-    data-aos="fade-up"
-    class="w-[90%] min-h-max bg-primary h-[40vh] md:h-[80vh] m-auto" [src]="videoUrl | safe"
-    title="YouTube video player"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  <br>
 </main>

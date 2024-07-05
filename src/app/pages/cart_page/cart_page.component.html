@@ -1,0 +1,57 @@
+<div (clickOutside)="handleClickOutside()" data-aos="slide-left" *ngIf="showing"
+     class="w-[300px] md:w-[500px] h-[calc(100vh-70px)] grid auto-rows-max gap-2 p-5 fixed top-[70px] right-0 z-40 text-white bg-accent-950">
+  <span class="flex justify-between">
+    <h2 class="text-[3ch] font-1">Checkout</h2>
+    <button (click)="cancel()" class="square-btn">
+      X
+    </button>
+  </span>
+  <table class="w-full text-center max-h-[40vh] overflow-y-scroll ">
+    <thead class="w-full h-[50px] leading-[50px] border-b border-b-slate-500">
+    <tr class="grid grid-cols-7">
+      <th class="w-full truncate" *ngFor="let key of keys">
+        {{ readable(key) }}
+      </th>
+      <th>
+        Cost
+      </th>
+      <th>Del</th>
+    </tr>
+    </thead>
+    <tbody class="w-full" *ngIf="cart_items.length > 0">
+      @for (item of cart_items; track item.id) {
+        <tr data-aos="fade-up"
+            class="w-full h-[50px] cursor-pointer hover:text-accent-400 grid grid-cols-7 leading-[50px]">
+          @for (key of keys; track key) {
+            <td class="truncate">{{ item[key] }}</td>
+          }
+          <td class="truncate">
+            {{ ((item.discount > 0 ? item.discount : item.price) * item.qty).toLocaleString() }}
+          </td>
+          <td class="m-auto">
+            <button (click)="remove_product(item.id)"
+                    class="w-[40px] h-[40px] active:opacity-70 flex m-auto text-red-500 !text-center">
+              <img class="text-accent m-auto" src="assets/icons/delete.svg" alt="delete product">
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  <!-- show if cart is empty -->
+  <span data-aos="fade-up" *ngIf="cart_items.length < 1"
+        class="text-center w-max m-auto">Oops, your cart is empty</span>
+  <form (submit)="sendCart()" data-aos="slide-up" class="w-full grid gap-2" *ngIf="cart_items.length > 0">
+    <h4 class="font-1 text-[26px]">Your details</h4>
+    <div [formGroup]="userDetails" class="w-full grid md:grid-cols-2 gap-2">
+      <input formControlName="first_name" class="dark-input" placeholder="First name">
+      <input formControlName="last_name" class="dark-input" placeholder="Last name">
+      <input formControlName="phone" class="dark-input" placeholder="Phone">
+      <input formControlName="email" class="dark-input" placeholder="Email (Optional)">
+    </div>
+    <div class="grid gap-2">
+      <button [disabled]="loading" class="!w-full pri-btn-ac">Checkout</button>
+      <button (click)="cancel()" type="button" class="!w-full outline-acc">Cancel</button>
+    </div>
+  </form>
+</div>

@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
 import {TextInputComponent} from "../text_input/text_input.component";
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {FetchBikesService} from "../../../services/read/fetch_bikes.service";
 import {ActivatedRoute} from "@angular/router";
 import {NgForOf} from "@angular/common";
+import {ApiService} from "../../../services/api.service";
 
 
 @Component({
@@ -68,7 +68,7 @@ export class PcFilterComponent {
     brands: new FormArray([new FormControl("")])
   })
 
-  constructor(private api: FetchBikesService, private route: ActivatedRoute) {
+  constructor(private api: ApiService, private route: ActivatedRoute) {
   }
 
   ngOnInit(){

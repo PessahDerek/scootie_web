@@ -32,13 +32,13 @@ body {
   @apply w-max h-[40px] rounded-full leading-[40px] pl-4 pr-4 font-1;
 }
 .square-btn {
-  @apply w-[40px] h-[40px] border border-accent text-accent;
+  @apply w-[40px] h-[40px] border border-accent text-accent active:bg-accent-200 disabled:border-accent-50 disabled:text-accent-50 disabled:bg-transparent;
 }
 .pri-btn-lt {
   @apply btn bg-primary-400 text-black hover:bg-primary;
 }
 .pri-btn-ac {
-  @apply btn bg-accent text-white hover:bg-accent-400 active:bg-accent-600
+  @apply btn bg-accent text-white hover:bg-accent-400 active:bg-accent-600 disabled:opacity-70
 }
 .outline-acc {
   @apply btn bg-transparent text-accent border border-accent hover:text-accent-600 hover:bg-accent-50
@@ -94,9 +94,19 @@ h1 {
   @apply w-full h-[1px] bg-gray-300;
 }
 input {
-  @apply p-4;
+  @apply w-full h-[40px] p-4;
 }
-
+.dark-input {
+  outline: transparent !important;
+  @apply bg-[#1D1D1D] outline-transparent focus:outline-transparent border border-transparent focus:border-b-accent ;
+}
 .light-input {
-  @apply w-full h-[40px] bg-primary outline outline-1 outline-gray-300 rounded-full focus:outline-accent-200 ;
+  @apply bg-primary outline outline-1 outline-gray-300 rounded-full focus:outline-accent-200 ;
+}
+.tilt-45 {
+  transform: translate(50%,50%);
+}
+.tile--45 {
+  /*position: absolute;*/
+  transform: rotateX(-45deg) rotateY(0deg) rotateZ(0deg);
 }

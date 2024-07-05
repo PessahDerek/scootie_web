@@ -12,13 +12,13 @@ import {ClickOutsideDirective} from "../../../directives/clickOutside.directive"
   template: `
     <div (clickOutside)="toggle(false)" class="dropdown">
       <button (click)="toggle()">
-        <div [class]="[show ? 'hide': '']"></div>
-        <div [class]="[show ? 'hide': '']"></div>
-        <div [class]="[show ? 'hide': '']"></div>
+        <div [class]="[show ? 'tilt-45': '']"></div>
+        <div [class]="[show ? 'opacity-0': 'opacity-100']"></div>
+        <div [class]="[show ? 'tilt--45 rotate-45': '']"></div>
       </button>
       @if (show) {
-        <div class="menu" data-aos="fade-up">
-          @for (path of paths; track paths) {
+        <div class="menu" data-aos="slide-up" data-aos-duration="550">
+          @for (path of paths; track path.name) {
             <a data-aos="fade-up" [routerLink]="path.path">{{ path.name }}</a>
           }
           <p>Fat-Bikes Kenya &copy;{{ date }}</p>
@@ -34,13 +34,16 @@ export class DropdownComponent {
   @Output() hideMenu = this.toggle
 
   constructor(private router: Router) {
-    router.events.subscribe(event => {
-      if(event instanceof NavigationStart)
+  }
+
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart)
         this.toggle(false)
     })
   }
 
-  toggle(value?: boolean){
+  toggle(value?: boolean) {
     this.show = value === undefined ? !this.show : value;
   }
 }

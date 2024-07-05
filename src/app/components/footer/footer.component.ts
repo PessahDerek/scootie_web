@@ -1,8 +1,7 @@
 import {Component} from "@angular/core";
-import {HttpClientModule} from "@angular/common/http";
 import {ListFaqComponent} from "../list_faq/list_faq.component";
 import {ListContactComponent} from "../list_contact/list_contact.component";
-import {FetchBikesService} from "../../../services/read/fetch_bikes.service";
+import {ContentQuery} from "../../../stores/content/content.query";
 
 
 @Component({
@@ -10,7 +9,6 @@ import {FetchBikesService} from "../../../services/read/fetch_bikes.service";
   selector: "footer-component",
   imports: [
     ListFaqComponent,
-    HttpClientModule,
     ListContactComponent,
   ],
   template: `
@@ -18,13 +16,13 @@ import {FetchBikesService} from "../../../services/read/fetch_bikes.service";
       <div class="w-[90%] m-auto grid md:grid-cols-2 gap-4">
         <div class="grid gap-2">
           <h2 class="text-[2ch] font-1">Faqs</h2>
-          @for (faq of faqs; track faqs) {
+          @for (faq of faqs; track faq.question) {
             <list_faq [faq]="faq"/>
           }
         </div>
         <div class="grid auto-rows-max h-max">
           <h2 class="text-[2ch] font-1">Reach us</h2>
-          @for (contact of contacts; track contacts) {
+          @for (contact of contacts; track contact.contact) {
             <list_contact [contact]="contact"/>
           }
         </div>
@@ -40,16 +38,16 @@ export class FooterComponent {
   faqs: Array<FaqObj> = [];
   contacts: Array<ContactObj> = []
 
-  constructor(private api: FetchBikesService) {
+  constructor(private contentQuery: ContentQuery) {
   }
   ngOnInit(){
-    this.api.get<{results: FaqObj[]}>(`/faqs/`)
-      .subscribe(data => {
-        this.faqs = this.faqs.concat(data.results)
-      })
-    this.api.get<{results: ContactObj[]}>(`/contacts/`)
+    this.contentQuery.faqs
       .subscribe(data =>{
-        this.contacts = this.contacts.concat(data.results)
+        this.faqs = data
+      })
+    this.contentQuery.contacts
+      .subscribe(data =>{
+        this.contacts = data
       })
   }
 }

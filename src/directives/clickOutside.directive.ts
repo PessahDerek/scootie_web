@@ -1,5 +1,8 @@
-import {Directive, ElementRef, EventEmitter, HostListener, Output} from "@angular/core";
+import {Directive, ElementRef, EventEmitter, HostListener, Injectable, Output} from "@angular/core";
 
+@Injectable({
+  providedIn: "root"
+})
 @Directive({
   selector: '[clickOutside]',
   standalone: true,

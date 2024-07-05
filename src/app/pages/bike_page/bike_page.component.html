@@ -1,22 +1,56 @@
 <div class="page">
   @if (bike) {
     <section class="page">
-      <div class="w-full h-full grid md:grid-cols-2">
-        <div>
-          <img priority [ngSrc]="bike.image1" fill alt="">
+      <div class="w-[90%] h-full m-auto grid md:grid-cols-2">
+        <div class="w-full h-[40vh]">
+          <img class="object-contain" priority [ngSrc]="bike.image1??''" fill alt="">
         </div>
         <div>
-          <h2>{{ bike.model }}</h2>
-          <h3>{{ bike.brand }}</h3>
-          <p>
-            {{bike.description}}
-          </p>
+          <!-- product name -->
+          <h2 class="text-[28px]">{{ bike.model }}</h2>
+          <h3 class="text-[24px] font-bold ">{{ bike.brand }}</h3>
+          <div class="w-full grid gap-2">
+            <span class="flex leading-loose gap-2">
+              <p class="mt-auto">Ksh.</p>
+              <span *ngIf="bike.discount > 0" class="text-accent mt-auto text-[28px]">
+                {{ bike.discount.toLocaleString() }}
+              </span>
+              <span
+                class="mt-auto {{bike.discount > 0 ? 'text-[16px] line-through text-gray-400':'text-[28px] text-accent'}}">
+                {{ bike.price.toLocaleString() }}
+              </span>
+            </span>
+            <div class="grid grid-flow-col auto-cols-max gap-2">
+              <button [disabled]="cart_state === undefined" (click)="edit_cart('qty', (cart_state?.qty??1)-1)" class="text-[22px] square-btn">
+                -
+              </button>
+              <input [disabled]="cart_state === undefined" [value]="cart_state?.qty??1" class="light-input">
+              <button [disabled]="cart_state === undefined" (click)="edit_cart('qty', (cart_state?.qty??1)+1)" class="text-[22px] square-btn">
+                +
+              </button>
+            </div>
+            <button (click)="cart_state !== undefined ? remove_frm_cart():add_to_cart()" class="pri-btn-ac !w-full">
+              {{cart_state === undefined ? "Add to":"Remove from"}} cart
+            </button>
+          </div>
+          <!-- description -->
+          <br>
+          <div class="grid gap-2">
+            <h4 class="text-[24px] font-bold">Description</h4>
+            <p>
+              {{ bike.description }}
+            </p>
+          </div>
         </div>
       </div>
+      <br>
+      <div class="w-[90%] m-auto grid gap-2 ">
+        <h4 class="text-[26px] text-accent-400 font-bold">Mode details</h4>
+        <bike-details [bike]="bike" />
+      </div>
+      <br>
     </section>
   } @else {
-    <div class="page flex">
-      <div class="w-[50px] h-[50px] m-auto rounded-full border-2 border-accent-200 border-t-accent animate-spin "></div>
-    </div>
+    <page-spinner/>
   }
 </div>

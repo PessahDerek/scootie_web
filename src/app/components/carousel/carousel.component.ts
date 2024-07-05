@@ -14,7 +14,7 @@ import {ListReviewComponent} from "../list_review/list_review.component";
   template: `
     <div class="w-full h-max grid gap-4 auto-rows-max">
       <div class="w-full h-max p-2 flex overflow-x-auto gap-4 scroll-m-0 hide-scroll-bar bg-primary">
-        @for (review of reviews; track reviews) {
+        @for (review of reviews; track review.name) {
           <list_review [review]="review" />
         }
       </div>

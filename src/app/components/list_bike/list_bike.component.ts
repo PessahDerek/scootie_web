@@ -14,7 +14,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   template: `
     <div (click)="viewProduct()"  class="w-full min-w-[150px] inline-block cursor-pointer active:shadow-none hover:shadow-xl hover:-translate-y-[5px] gap-2 bg-white">
       <div class="w-full h-[20vmax]">
-        <img class="w-full h-full object-center object-contain" fill priority [ngSrc]="bike.image1"
+        <img class="w-full h-full object-center object-contain" fill priority [ngSrc]="bike.image1??''"
              [alt]="bike.brand"/>
       </div>
       <div class="flex justify-between p-2 flex-wrap">

@@ -1,8 +1,12 @@
-
-declare interface PathObj {
+declare type PathObj = {
   name: string;
+} & ({
   path: string;
-}
+  action?: undefined
+} | {
+  path?: undefined
+  action: "show-cart"
+})
 
 declare interface CategoryObj {
   category: string;
@@ -10,12 +14,14 @@ declare interface CategoryObj {
 }
 
 declare interface BikeObj {
+  [key: string]: string | number;
+
   url: string;
   id: number;
   brand: string;
   model: string;
   frame: string;
-  image1: string;
+  image1?: string;
   image2?: string; // Optional image2
   image3?: string;   // Optional image3 set to null
   image4?: string;   // Optional image4 set to null
@@ -64,17 +70,75 @@ declare type GetService<T> = (url: string, options: object) => Observable<T>
 
 declare interface ListOfBikesInStore {
   [key: string]: number | BikeObj[];
+
   page: number;
   bikes: BikeObj[]
 }
 
 declare interface BikesInStore {
   [key: string]: string | Array<ListOfBikesInStore>;
+
   category: string;
   list: ListOfBikesInStore[]
 }
 
-declare interface BikeStoreState {
-  [key: string]: Array<BikesInStore>
-  bikes: Array<BikesInStore>
+declare interface CartItem {
+  [key: string]: number | string
+  id: number,
+  brand: string,
+  model: string,
+  qty: number,
+  price: number,
+  discount: number
 }
+
+declare interface CartStoreObj {
+  items: CartItem[],
+  show_cart: boolean;
+}
+
+declare interface ClientDetailsObj {
+  first_name: string;
+  last_name: string;
+  email?: string;
+  phone: string;
+}
+
+declare interface BikeStoreObj {
+  [key: string]: Array<BikesInStore> | CartObj
+  bikes: Array<BikesInStore>;
+}
+
+declare interface ContentStoreObj {
+  [key: string]: string | Array<ContactObj> | Array<FaqObj> | Array<CategoryObj> |Array<ReviewObj>
+  about: string;
+  video_url: string;
+  contacts: Array<ContactObj>;
+  faqs: Array<FaqObj>;
+  reviews: Array<ReviewObj>;
+}
+declare interface AboutResultObj {
+  content: string
+}
+
+declare interface ContactResultObj {
+  results: ContactObj[]
+}
+
+declare interface FaqResultObj {
+  results: FaqObj[]
+}
+
+declare interface CategoryResultObj {
+  results: CategoryObj[]
+}
+
+declare interface ReviewsResultObj {
+  results: ReviewObj[]
+}
+
+declare interface VideoUrlResultObj {
+  results: { url: string }[]
+}
+
+

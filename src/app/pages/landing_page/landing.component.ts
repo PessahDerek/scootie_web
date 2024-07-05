@@ -1,13 +1,15 @@
 import {Component} from "@angular/core";
-import {NgOptimizedImage} from "@angular/common";
-import {HttpClientModule} from "@angular/common/http";
+import {NgIf, NgOptimizedImage} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {ListCategoryComponent} from "../../components/list_category/listcategory.component";
 import {ListReviewComponent} from "../../components/list_review/list_review.component";
 import {CarouselComponent} from "../../components/carousel/carousel.component";
 import {SafePipe} from "../../app.component";
-import {FetchBikesService} from "../../../services/read/fetch_bikes.service";
-import sanitize from "sanitize-html";
+import {ContentService} from "../../../services/content.service";
+import {ContentQuery} from "../../../stores/content/content.query";
+import {PageSpinnerComponent} from "../../components/page_spinner/page_spinner.component";
+import {BikesService} from "../../../services/bikes.service";
+import {BikeQuery} from "../../../stores/bikes/bike.query";
 
 
 @Component({
@@ -16,15 +18,17 @@ import sanitize from "sanitize-html";
   templateUrl: "./landing.component.html",
   imports: [
     NgOptimizedImage,
-    HttpClientModule,
     RouterLink,
     ListCategoryComponent,
     ListReviewComponent,
     CarouselComponent,
     SafePipe,
+    PageSpinnerComponent,
+    NgIf,
   ]
 })
 export class LandingComponent {
+  ready: boolean = false;
   about: string = "";
   benefits: { title: string, description: string }[] = [
     {
@@ -49,28 +53,33 @@ export class LandingComponent {
   videoUrl: string = "";
 
 
-  constructor(private api: FetchBikesService) {
+  constructor(private bikeService: BikesService, private bikeQuery: BikeQuery, private contentService: ContentService, private contentQuery: ContentQuery) {
   }
 
   ngOnInit() {
-    this.api.get<{content: string}>('/content/1/',)
-      .subscribe((data) => {
-        this.about = sanitize((data as { content: string }).content)
-      })
-    this.api.get<{ results: Array<CategoryObj> }>(`/category/`)
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    this.bikeService
+      .fetch_all_categories()
+      .subscribe({
+          complete: () => this.ready = true
+        }
+      )
+    this.contentQuery.about.subscribe(data => {
+      this.about = data;
+    })
+    this.bikeQuery.categories
       .subscribe(data => {
-        this.categories = [...this.categories, ...data.results]
+        this.categories = data.filter(f => !!f.category);
       })
-    this.api.get<{ results: ReviewObj[] }>(`/reviews/`)
-      .subscribe(data => {
-        this.reviews = [...data.results]
-      })
-    this.api.get<{ results: { url: string }[] }>(`/videos/`)
-      .subscribe(data => {
-        // Replace url to only get the unique id
-        this.videoUrl = data.results[0]?.url.replace("https://youtu.be/", "https://www.youtube.com/embed/").trim()
-      })
+    this.contentQuery.reviews.subscribe(data => {
+      this.reviews = [...data]
+    })
+    this.contentQuery.video_url.subscribe(data => {
+      this.videoUrl = data
+    })
+    this.contentQuery.loading.subscribe(isLoading => {
+      this.ready = !isLoading;
+    })
   }
 
-  protected readonly ListReviewComponent = ListReviewComponent;
 }

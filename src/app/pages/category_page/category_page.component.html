@@ -6,13 +6,13 @@
     <app-pcFilter/>
     <div class="w-full h-full grid gap-2">
       <div class="w-full h-[calc(100vh-70px)] rounded-xl overflow-y-auto columns-2 md:columns-4 auto-rows-max p-2 bg-primary">
-        @for (bike of list; track list) {
+        @for (bike of list; track bike.id) {
           <list_bike [bike]="bike" [category]="category"/>
         }
       </div>
       <div class="w-full grid-cols-10 p-2 overflow-x-auto hide-scroll-bar">
 
-        @for (page of total_pages; track total_pages){
+        @for (page of total_pages; track page){
           <button class="square-btn">
             {{page}}
           </button>

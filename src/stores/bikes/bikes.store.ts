@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 
 
 
-export function createInitialState(): BikeStoreState {
+export function createInitialState(): BikeStoreObj {
   return {
     bikes: [
       {
@@ -16,7 +16,7 @@ export function createInitialState(): BikeStoreState {
 
 @Injectable({providedIn: 'root'})
 @StoreConfig({name: 'bikes'})
-export class BikesStore extends Store<BikeStoreState> {
+export class BikesStore extends Store<BikeStoreObj> {
   constructor() {
     super(createInitialState());
   }
