@@ -22,7 +22,7 @@ import {ContentQuery} from "../../../stores/content/content.query";
         </div>
         <div class="grid auto-rows-max h-max">
           <h2 class="text-[2ch] font-1">Reach us</h2>
-          @for (contact of contacts; track contact.contact) {
+          @for (contact of contacts; track contact.link) {
             <list_contact [contact]="contact"/>
           }
         </div>

@@ -2,16 +2,24 @@
   <br>
   <h2 class="w-[95%] md:w-[90%] m-auto text-3xl">{{ category }}</h2>
   <br>
-  <div class="w-[95%] md:w-[90%] flex gap-2 m-auto">
-    <app-pcFilter/>
+  <div class="w-[95%] md:w-[90%] block md:flex gap-2 m-auto">
+<!--    <app-pcFilter class="sticky top-[75px] z-40 md:top-auto md:block" />-->
+    <app-pc-filter />
+    <app-mobile-filter/>
     <div class="w-full h-full grid gap-2">
-      <div class="w-full h-[calc(100vh-70px)] rounded-xl overflow-y-auto columns-2 md:columns-4 auto-rows-max p-2 bg-primary">
-        @for (bike of list; track bike.id) {
-          <list_bike [bike]="bike" [category]="category"/>
+      <div>Filter Mode: {{filter_mode}} : {{filtered_list.length}}</div>
+      <div class="w-full h-[calc(100vh-70px)] gap-2 rounded-xl overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-max p-2 bg-primary">
+        @if(filter_mode){
+          @for (bike of filtered_list; track bike.id) {
+            <list_bike [bike]="bike" [category]="category"/>
+          }
+        } @else {
+          @for (bike of list; track bike.id) {
+            <list_bike [bike]="bike" [category]="category"/>
+          }
         }
       </div>
-      <div class="w-full grid-cols-10 p-2 overflow-x-auto hide-scroll-bar">
-
+      <div *ngIf="total_pages.length > 1" class="w-full grid-cols-10 p-2 overflow-x-auto hide-scroll-bar">
         @for (page of total_pages; track page){
           <button class="square-btn">
             {{page}}

@@ -15,7 +15,7 @@ import {CartService} from "../../../services/cart.service";
   template: `
     <nav class="w-full h-[70px] sticky top-0 z-40 bg-primary-400">
       <div class="w-[90%] h-full flex justify-between m-auto border-b border-b-primary-600">
-        <a class="font-1 text-[3vmax] font-bold md:font-normal leading-[70px] text-accent" href="/">Fat-bikes Kenya</a>
+        <a class="truncate font-1 text-[3vmax] font-bold md:font-normal leading-[70px] text-accent" href="/">Fat-bikes Kenya</a>
         <!-- PC navigation, hidden in mobile -->
         <div class="w-max font-1 hidden md:flex gap-5">
           @for (path of paths; track path.name) {

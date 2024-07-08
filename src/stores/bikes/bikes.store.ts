@@ -5,12 +5,7 @@ import {Injectable} from "@angular/core";
 
 export function createInitialState(): BikeStoreObj {
   return {
-    bikes: [
-      {
-        category: "",
-        list: []
-      }
-    ]
+    bikes: new Map()
   }
 }
 

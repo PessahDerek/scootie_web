@@ -12,9 +12,11 @@ import {ActivatedRoute, Router} from "@angular/router";
     NgIf
   ],
   template: `
-    <div (click)="viewProduct()"  class="w-full min-w-[150px] inline-block cursor-pointer active:shadow-none hover:shadow-xl hover:-translate-y-[5px] gap-2 bg-white">
-      <div class="w-full h-[20vmax]">
-        <img class="w-full h-full object-center object-contain" fill priority [ngSrc]="bike.image1??''"
+    <div (click)="viewProduct()"
+         class="w-full h-full md:inline-block cursor-pointer active:shadow-none hover:shadow-xl hover:-translate-y-[5px] gap-2 bg-white">
+      <div class="w-full h-[20vmax] {{loading ? 'animate-pulse':''}}">
+        <img (load)="doneLoading()" class="w-full h-full object-center object-contain" fill priority
+             [ngSrc]="bike.image1??''"
              [alt]="bike.brand"/>
       </div>
       <div class="flex justify-between p-2 flex-wrap">
@@ -34,6 +36,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class ListBikeComponent {
   @Input() bike: BikeObj = defaultBike;
   @Input() category: string = '';
+  loading = true;
 
   constructor(private router: Router, private url: ActivatedRoute) {
   }
@@ -41,9 +44,12 @@ export class ListBikeComponent {
   viewProduct(): void {
     this.router.navigate([`/category/${this.category}/${this.bike.id}`])
       .then(()=>{})
-      .catch(err => {
-        console.log("err: ",err);
+      .catch(_err => {
+        // pass
       })
+  }
+  doneLoading(){
+    this.loading = false;
   }
 
 }

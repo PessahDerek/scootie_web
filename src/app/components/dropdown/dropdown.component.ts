@@ -1,6 +1,7 @@
 import {Component, Input, Output} from "@angular/core";
 import {NavigationStart, Router, RouterLink} from "@angular/router";
 import {ClickOutsideDirective} from "../../../directives/clickOutside.directive";
+import {CartService} from "../../../services/cart.service";
 
 @Component({
   standalone: true,
@@ -19,7 +20,11 @@ import {ClickOutsideDirective} from "../../../directives/clickOutside.directive"
       @if (show) {
         <div class="menu" data-aos="slide-up" data-aos-duration="550">
           @for (path of paths; track path.name) {
-            <a data-aos="fade-up" [routerLink]="path.path">{{ path.name }}</a>
+            @if (path.path){
+              <a data-aos="fade-up" [routerLink]="path.path">{{ path.name }}</a>
+            } @else {
+              <a data-aos="fade-up" (click)="toggle_cart()" >{{ path.name }}</a>
+            }
           }
           <p>Fat-Bikes Kenya &copy;{{ date }}</p>
         </div>
@@ -33,7 +38,7 @@ export class DropdownComponent {
   @Input() paths: Array<PathObj> = [];
   @Output() hideMenu = this.toggle
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private cartService: CartService) {
   }
 
   ngOnInit() {
@@ -43,6 +48,9 @@ export class DropdownComponent {
     })
   }
 
+  toggle_cart(){
+    this.cartService.toggle_cart()
+  }
   toggle(value?: boolean) {
     this.show = value === undefined ? !this.show : value;
   }

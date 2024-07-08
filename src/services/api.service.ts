@@ -8,7 +8,11 @@ type HttpClientInstance<T> = HttpClient & T
   providedIn: "root",
 })
 export class ApiService {
-  baseUrl: string = !window.location.href.includes('local') ?"https://pixystix.pythonanywhere.com" : "http://192.168.100.76:8000"
+  // TODO: set this to fixed in production
+  baseUrl: string = !window.location.href.includes('local')
+    ?"https://pixystix.pythonanywhere.com"
+    // : "http://192.168.100.76:8000"
+    : "http://localhost:8000"
 
   constructor(private http: HttpClient) {}
 

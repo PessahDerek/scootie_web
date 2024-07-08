@@ -1,9 +1,13 @@
 import {Component} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {ListBikeComponent} from "../../components/list_bike/list_bike.component";
-import {PcFilterComponent} from "../../components/pc_filter/pc_filter.component";
+import {FilterComponent} from "../../components/filter/filter.component";
 import {BikesService} from "../../../services/bikes.service";
 import {BikeQuery} from "../../../stores/bikes/bike.query";
+import {PcFilterComponent} from "../../components/pcfilter/pc.component";
+import {MobileFilterComponent} from "../../components/mobilefilter/mobile.component";
+import {NgIf} from "@angular/common";
+import {FilterService} from "../../../services/filter.service";
 
 
 @Component({
@@ -11,7 +15,10 @@ import {BikeQuery} from "../../../stores/bikes/bike.query";
   selector: 'category-page',
   imports: [
     ListBikeComponent,
-    PcFilterComponent
+    FilterComponent,
+    PcFilterComponent,
+    MobileFilterComponent,
+    NgIf
   ],
   templateUrl: './category_page.component.html',
 })
@@ -22,8 +29,10 @@ export class CategoryPageComponent {
   page: number = 1;
   list: BikeObj[] = [];
   total_pages: Array<number> = [];
+  filtered_list: BikeObj[] = []
+  filter_mode = false;
 
-  constructor(private bikeQuery: BikeQuery, private route: ActivatedRoute, private bikeService: BikesService) {
+  constructor(private bikeQuery: BikeQuery, private route: ActivatedRoute, private bikeService: BikesService, private filterService: FilterService) {
   }
 
   ngOnInit() {
@@ -31,12 +40,22 @@ export class CategoryPageComponent {
     this.route.params
       .subscribe(params => {
           this.category = params['category']
+          this.filterService.category.next(this.category)
         }
       )
     this.bikeService.fetch_by_category(this.category, this.page)
       .subscribe()
     this.bikeQuery.bikes_via_category(this.category, this.page)
-      .subscribe(data => this.list = data)
+      .subscribe(data => {
+        this.list = data
+      })
+    this.filterService.filterMode
+      .subscribe(mode => {
+        this.filter_mode = mode
+      })
+    this.filterService.list.subscribe(
+      list => this.filtered_list = list.get(this.page) ?? []
+    )
   }
 
 

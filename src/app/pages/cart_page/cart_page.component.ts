@@ -47,10 +47,10 @@ export class CartPageComponent {
     this.cartService.sendCart(this.userDetails.getRawValue() as ClientDetailsObj)
       .subscribe({
         next: data => {
-          console.log(data)
+          //handle reception
         },
         error: err => {
-          console.log(err)
+          // TODO: Notify error
         }
       })
   }

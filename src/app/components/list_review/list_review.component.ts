@@ -33,7 +33,6 @@ export class ListReviewComponent {
 
   scrollIntoView(): void {
     const element = document.getElementById(this.id);
-    console.log("here...")
 
     if (!element)
       return

@@ -1,8 +1,6 @@
 import {CartStore} from "../stores/cart/cart.store";
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
 import {ApiService} from "./api.service";
-import {tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -12,18 +10,21 @@ export class CartService {
   constructor(private CartStore: CartStore, private api: ApiService) {
   }
 
-  sendCart(client: ClientDetailsObj){
+  sendCart(client: ClientDetailsObj) {
     this.CartStore.setLoading(true)
     return this.api.post('/cart', {
       client: client,
-      items: this.CartStore.getValue().items
+      items: this.CartStore.getValue().items.map(item => ({
+        id: item.id,
+        qty: item.qty,
+      }))
     }).pipe(data => {
       this.CartStore.setLoading(false)
       return data
     })
   }
 
-  toggle_cart(show: boolean = !this.CartStore.getValue().show_cart){
+  toggle_cart(show: boolean = !this.CartStore.getValue().show_cart) {
     this.CartStore.update(prev => ({...prev, show_cart: show}))
   }
 
@@ -49,7 +50,7 @@ export class CartService {
     const copy = [...this.CartStore.getValue().items.map(cart => {
       if (cart.id.toString() == id.toString()) {
         const hold = {...cart}
-        if(field === 'qty' && Number(value) > 0)
+        if (field === 'qty' && Number(value) > 0)
           hold[field] = Math.abs(parseFloat(value.toString()))
         return hold
       }

@@ -40,7 +40,6 @@ export class BikePageComponent {
     this.bikeService.fetch_by_id(this.id)
       .subscribe(bike => {
         this.bike = bike;
-        console.log('Got bike: ', bike)
       })
   }
 
@@ -61,7 +60,6 @@ export class BikePageComponent {
   }
 
   remove_frm_cart() {
-    console.log("Clicked to remove: ", this.cart_state)
     this.cartService.remove_from_cart(this.id)
   }
 }

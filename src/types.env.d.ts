@@ -104,9 +104,13 @@ declare interface ClientDetailsObj {
   phone: string;
 }
 
+declare type BikeStoreBike = Map<number, BikeObj>
+declare type BikeStorePage = Map<number, BikeStoreBike> // page, bikes
+declare type BikeStoreCategory = Map<string, BikeStorePage>
+
 declare interface BikeStoreObj {
   [key: string]: Array<BikesInStore> | CartObj
-  bikes: Array<BikesInStore>;
+  bikes: BikeStoreCategory;
 }
 
 declare interface ContentStoreObj {
@@ -141,4 +145,10 @@ declare interface VideoUrlResultObj {
   results: { url: string }[]
 }
 
+declare interface FilterObj {
+  max: number,
+  min: number,
+  lowToHigh?: boolean,
+  brands: string[]
+}
 
