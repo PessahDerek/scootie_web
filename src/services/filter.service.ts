@@ -41,7 +41,7 @@ export class FilterService {
   }
 
   edit_filter(field: string, value: boolean | string | string[]) {
-    if(field === 'lowToHigh' && typeof value === "string")
+    if (field === 'lowToHigh' && typeof value === "string")
       value = value.toLowerCase() === 'true'
     this.filters.next({...this.filters.value, [field]: value})
   }
@@ -50,13 +50,13 @@ export class FilterService {
     this.page.next(page)
   }
 
-  applyFilters() {
+  applyFilters(callback?: () => any) {
     const filter = this.filters.getValue()
     const user_wants: { [key: string]: boolean | number | string[] } = {}
     if (!Number.isNaN(Number(filter.max)) && Number(filter.max) > 0) {
       user_wants["max"] = Number(filter.max)
     }
-    if (!Number.isNaN(Number(filter.min)) && Number(filter.max) > 0) {
+    if (!Number.isNaN(Number(filter.min)) && Number(filter.min) > 0) {
       user_wants["min"] = Number(filter.min)
     }
     if (filter.brands.length > 0) {
@@ -72,13 +72,15 @@ export class FilterService {
     this.bikeQuery.bikes_via_category(this.category.value, this.page.value)
       .subscribe(foundBikes => {
         for (const bike of foundBikes) {
+          const price = parseFloat(bike.discount.toString()) > 0 ? parseFloat(bike.discount.toString()) : Number(bike.price)
           for (const key of Object.keys(user_wants)) {
-            if (key === 'max' && (Number(bike.price) > (user_wants[key] as number))) {
+            console.log("key: ", key, " _ ", user_wants)
+            if (key === 'max' && (price > (user_wants[key] as number))) {
               // price is higher than maximum
               // console.log('breaks at max')
               break
             }
-            if (key === 'min' && (Number(bike.price) < (user_wants[key] as number))) {
+            if (key === 'min' && (price < (user_wants[key] as number))) {
               // price is less than minimum
               // console.log('breaks at min')
               break
@@ -101,10 +103,13 @@ export class FilterService {
         }
         const max_page = ((holdBikes.length / 20) < 1 ? 1 : (holdBikes.length / 20))
         for (let i = 1; i <= max_page; i++) {
-          const val = this.list.value.set(1, [...holdBikes.slice((i*20)-20, ((i*20)-20)+20)])
-          this.list.next(val)
+          const val = this.list.value.set(1, [...holdBikes.slice((i * 20) - 20, ((i * 20) - 20) + 20)])
+          this.list.next(new Map(val))
         }
         this.filterMode.next(true)
+        if (callback)
+          callback()
       })
+      .unsubscribe()
   }
 }

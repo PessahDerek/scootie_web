@@ -42,10 +42,12 @@ export class ListBikeComponent {
   }
 
   viewProduct(): void {
-    this.router.navigate([`/category/${this.category}/${this.bike.id}`])
+    console.log("viewing")
+    this.router.navigate([this.bike.id], {relativeTo: this.url})
       .then(()=>{})
       .catch(_err => {
         // pass
+        console.log(_err)
       })
   }
   doneLoading(){

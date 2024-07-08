@@ -19,8 +19,8 @@ export const routes: Routes = [
       .then(m => m.CategoryPageComponent),
   },
   {
-    path: "category/:category/:id",
-    loadComponent: ()=>import('./pages/bike_page/bike_page.component')
+    path: "view/:category/:id",
+    loadComponent: ()=>import('./pages/view_bike_page/view_bike_page.component')
       .then(m => m.BikePageComponent)
   }
 ];

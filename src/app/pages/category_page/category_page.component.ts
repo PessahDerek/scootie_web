@@ -1,11 +1,9 @@
 import {Component} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {ListBikeComponent} from "../../components/list_bike/list_bike.component";
-import {FilterComponent} from "../../components/filter/filter.component";
+import {MobileFilterComponent} from "../../components/filter/filter.component";
 import {BikesService} from "../../../services/bikes.service";
 import {BikeQuery} from "../../../stores/bikes/bike.query";
-import {PcFilterComponent} from "../../components/pcfilter/pc.component";
-import {MobileFilterComponent} from "../../components/mobilefilter/mobile.component";
 import {NgIf} from "@angular/common";
 import {FilterService} from "../../../services/filter.service";
 
@@ -15,8 +13,6 @@ import {FilterService} from "../../../services/filter.service";
   selector: 'category-page',
   imports: [
     ListBikeComponent,
-    FilterComponent,
-    PcFilterComponent,
     MobileFilterComponent,
     NgIf
   ],
@@ -57,6 +53,4 @@ export class CategoryPageComponent {
       list => this.filtered_list = list.get(this.page) ?? []
     )
   }
-
-
 }

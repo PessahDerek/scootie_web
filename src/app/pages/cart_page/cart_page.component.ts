@@ -5,6 +5,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {readable} from "../../../libs/methods/shared";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ClickOutsideDirective} from "../../../directives/clickOutside.directive";
+import {NotificationService} from "../../../services/notification.service";
 
 
 @Component({
@@ -30,7 +31,7 @@ export class CartPageComponent {
   })
   loading: boolean = false;
   keys = ['model', 'brand', 'qty', 'price', 'discount']
-  constructor(private cart_query: CartQuery, private cartService: CartService) {}
+  constructor(private notification: NotificationService, private cart_query: CartQuery, private cartService: CartService) {}
 
   ngOnInit(){
     this.cart_query.showing
@@ -48,9 +49,11 @@ export class CartPageComponent {
       .subscribe({
         next: data => {
           //handle reception
+          this.notification.notify(data.message)
         },
         error: err => {
           // TODO: Notify error
+          this.notification.notify(err.error, "Warning!")
         }
       })
   }

@@ -6,6 +6,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {FooterComponent} from "./components/footer/footer.component";
 import {CartPageComponent} from "./pages/cart_page/cart_page.component";
 import {ContentService} from "../services/content.service";
+import {AlertComponent} from "./components/alert/alert.component";
 
 @Pipe({
   name: 'safe',
@@ -23,7 +24,7 @@ export class SafePipe implements PipeTransform {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, FooterComponent, CartPageComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, CartPageComponent, AlertComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent {

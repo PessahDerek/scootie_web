@@ -12,7 +12,7 @@ export class CartService {
 
   sendCart(client: ClientDetailsObj) {
     this.CartStore.setLoading(true)
-    return this.api.post('/cart', {
+    return this.api.post<{message: string}>('/cart', {
       client: client,
       items: this.CartStore.getValue().items.map(item => ({
         id: item.id,

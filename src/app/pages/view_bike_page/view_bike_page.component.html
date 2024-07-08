@@ -50,7 +50,14 @@
       </div>
       <br>
     </section>
-  } @else {
+  } @else if (!error_getting_bike) {
     <page-spinner/>
+  } @else if(error_getting_bike.length > 0) {
+    <div class="page flex">
+      <h2 class="max-w-[80%] md:max-w-[50%] grid text-[22px] m-auto">
+        <p>{{error_getting_bike}}</p>
+        <a class="acc-btn-lt" [routerLink]="['/view', category]">See more</a>
+      </h2>
+    </div>
   }
 </div>

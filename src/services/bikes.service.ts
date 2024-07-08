@@ -1,5 +1,5 @@
 import {BikesStore} from "../stores/bikes/bikes.store";
-import {Observable, tap} from "rxjs";
+import {map, mergeMap, Observable, switchMap, tap} from "rxjs";
 import {Injectable} from "@angular/core";
 import {ApiService} from "./api.service";
 import {BikeQuery} from "../stores/bikes/bike.query";
@@ -94,19 +94,40 @@ export class BikesService {
     return this.bikeQuery.select(store => {
       const pages = [...store.bikes.values()].find(page => page.has(id))
       return [...pages?.get(id)?.values() ?? []][0]
-    }).pipe(tap(value => {
-      if (!value)
-        return this.api.get<BikeObj | undefined>(`/bikes/${id}`)
-          .pipe(
-            tap(result => {
-              // update inside store
-              if (result)
-                this.updateOneBike(result)
-              return result
-            })
-          )
-      return value
-    }))
+    }).pipe(
+      // tap(value => {
+      //   if (!value) {
+      //     return this.api.get<BikeObj | undefined>(`/bikes/${id}`)
+      //       .pipe(
+      //         tap(result => {
+      //           // update inside store
+      //           if (result)
+      //             this.updateOneBike(result)
+      //           console.log("From database: ", result)
+      //           return result
+      //         }),
+      //       )
+      //   }
+      //   return value
+      // })
+      switchMap(result => {
+        if (!result)
+          return this.api.get<BikeObj | undefined>(`/bikes/${id}`)
+            .pipe(
+              tap(result => {
+                // update inside store
+                if (result)
+                  this.updateOneBike(result)
+                console.log("From database: ", result)
+                return result
+              }),
+            )
+        return new Observable<BikeObj | undefined>(subscriber => {
+          subscriber.next(result)
+          subscriber.complete()
+        })
+      })
+    )
 
     // if (foundLocally) {
     //   return new Observable((subscriber) => {

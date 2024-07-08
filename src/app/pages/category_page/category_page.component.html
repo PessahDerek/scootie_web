@@ -1,13 +1,10 @@
 <div class="page">
   <br>
   <h2 class="w-[95%] md:w-[90%] m-auto text-3xl">{{ category }}</h2>
-  <br>
-  <div class="w-[95%] md:w-[90%] block md:flex gap-2 m-auto">
-<!--    <app-pcFilter class="sticky top-[75px] z-40 md:top-auto md:block" />-->
-    <app-pc-filter />
-    <app-mobile-filter/>
+<!--  <br>-->
+  <div class="w-[95%] md:w-[90%] grid gap-2 auto-rows-max md:flex justify-self-start m-auto">
+    <app-filter />
     <div class="w-full h-full grid gap-2">
-      <div>Filter Mode: {{filter_mode}} : {{filtered_list.length}}</div>
       <div class="w-full h-[calc(100vh-70px)] gap-2 rounded-xl overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-max p-2 bg-primary">
         @if(filter_mode){
           @for (bike of filtered_list; track bike.id) {
