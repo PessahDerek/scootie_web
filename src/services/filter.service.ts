@@ -73,26 +73,30 @@ export class FilterService {
       .subscribe(foundBikes => {
         for (const bike of foundBikes) {
           const price = parseFloat(bike.discount.toString()) > 0 ? parseFloat(bike.discount.toString()) : Number(bike.price)
+          let add = true
           for (const key of Object.keys(user_wants)) {
             console.log("key: ", key, " _ ", user_wants)
             if (key === 'max' && (price > (user_wants[key] as number))) {
               // price is higher than maximum
               // console.log('breaks at max')
+              add = false;
               break
             }
             if (key === 'min' && (price < (user_wants[key] as number))) {
               // price is less than minimum
               // console.log('breaks at min')
+              add = false;
               break
             }
             if (key === 'brands' && !(user_wants[key] as string[]).includes(bike.brand)) {
               // is not of the required brand
               // console.log('breaks at brands')
+              add = false;
               break
             }
-            // console.log("Pushing: ", bike)
-            holdBikes.push(bike)
           }
+          if(add)
+            holdBikes.push(bike)
         }
         if ('lowToHigh' in user_wants) {
           holdBikes = holdBikes.sort(
