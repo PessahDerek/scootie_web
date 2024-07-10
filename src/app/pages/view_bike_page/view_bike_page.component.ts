@@ -7,6 +7,7 @@ import {CartQuery} from "../../../stores/cart/cart.query";
 import {CartService} from "../../../services/cart.service";
 import {PageSpinnerComponent} from "../../components/page_spinner/page_spinner.component";
 import {BikesService} from "../../../services/bikes.service";
+import {ImageCarouselComponent} from "../../components/image_carousel/image_carousel.component";
 
 
 @Component({
@@ -18,7 +19,8 @@ import {BikesService} from "../../../services/bikes.service";
     NgOptimizedImage,
     DetailComponent,
     PageSpinnerComponent,
-    RouterLink
+    RouterLink,
+    ImageCarouselComponent
   ]
 })
 export class BikePageComponent {
@@ -26,7 +28,8 @@ export class BikePageComponent {
   bike?: BikeObj;
   cart_state?: CartItem = undefined;
   error_getting_bike: string | undefined = undefined;
-  category: string = ""
+  category: string = "";
+  images: string[] = []
 
   constructor(private bikeService: BikesService, private cartService: CartService, private cartQuery: CartQuery, private bikeQuery: BikeQuery, private router: ActivatedRoute) {
   }
@@ -45,6 +48,9 @@ export class BikePageComponent {
       .subscribe(bike => {
         if (bike) {
           this.error_getting_bike = undefined;
+          if(bike){
+            this.images = Object.keys(bike).map(key => key.includes('image') ? bike[key] as string : "").filter(f => f)
+          }
           return this.bike = bike;
         } else return this.error_getting_bike = "Sorry, it seems we could not find this bike (Maybe this url is broken " +
           "or we no longer have it 🤔), but I'm sure you'll love the other stuff we've got 🤩."
