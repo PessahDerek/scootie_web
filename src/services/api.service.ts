@@ -11,10 +11,10 @@ export class ApiService {
   // TODO: set this to fixed in production
   baseUrl: string = !window.location.href.includes('local')
     // ?"https://pixystix.pythonanywhere.com"
-    ?"https://1a82062986f11b1f3529d82ba2181faf.serveo.net"
+    ?"https://7991e0212673e6.lhr.life"
     // : "http://192.168.100.76:8000"
-    // : "https://1a82062986f11b1f3529d82ba2181faf.serveo.net"
-    : "http://localhost:8000"
+    : "https://7991e0212673e6.lhr.life"
+    // : "http://localhost:8000"
 
   constructor(private http: HttpClient) {}
 
