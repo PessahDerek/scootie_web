@@ -11,9 +11,9 @@ export class ApiService {
   // TODO: set this to fixed in production
   baseUrl: string = !window.location.href.includes('local')
     // ?"https://pixystix.pythonanywhere.com"
-    ?"https://f9d854545f9c65.lhr.life"
+    ?"https://f4bccab227d5f5.lhr.life"
     // : "http://192.168.100.76:8000"
-    : "https://f9d854545f9c65.lhr.life"
+    : "https://f4bccab227d5f5.lhr.life"
     // : "http://localhost:8000"
 
   constructor(private http: HttpClient) {}
